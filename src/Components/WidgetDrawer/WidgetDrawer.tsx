@@ -3,6 +3,7 @@ import {
   Card,
   CardHeader,
   CardTitle,
+  Flex,
   Gallery,
   GalleryItem,
   Icon,
@@ -19,7 +20,7 @@ import { CloseIcon, GripVerticalIcon } from '@patternfly/react-icons';
 import { WidgetTypes } from '../Widgets/widgetTypes';
 import { currentDropInItemAtom } from '../../state/currentDropInItemAtom';
 import widgetMapper from '../Widgets/widgetMapper';
-import { widgetDefaultTitles } from '../Widgets/widgetDefaults';
+import { widgetDefaultIcons, widgetDefaultTitles } from '../Widgets/widgetDefaults';
 
 export type AddWidgetDrawerProps = React.PropsWithChildren<{
   dismissible?: boolean;
@@ -27,6 +28,7 @@ export type AddWidgetDrawerProps = React.PropsWithChildren<{
 
 const WidgetWrapper = ({ title, widgetType }: React.PropsWithChildren<{ title: string; widgetType: WidgetTypes }>) => {
   const setDropInItem = useSetAtom(currentDropInItemAtom);
+  const HeaderIcon = widgetDefaultIcons[widgetType];
   const headerActions = (
     <Tooltip content={<p>Move widget</p>}>
       <Icon className="pf-v5-u-pt-md">
@@ -55,7 +57,12 @@ const WidgetWrapper = ({ title, widgetType }: React.PropsWithChildren<{ title: s
       draggable={true}
     >
       <CardHeader className="pf-v5-u-py-md" actions={{ actions: headerActions }}>
-        <CardTitle>{title}</CardTitle>
+        <Flex className="pf-v5-u-flex-direction-row pf-v5-u-flex-nowrap">
+          <Icon status="custom" className="pf-v5-u-mr-sm">
+            {HeaderIcon ? <HeaderIcon /> : null}
+          </Icon>
+          <CardTitle>{title}</CardTitle>
+        </Flex>
       </CardHeader>
     </Card>
   );
